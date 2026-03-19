@@ -70,8 +70,8 @@
   <!-- ===== Right Floating Menu ===== -->
   <aside class="aside-nav">
     <div class="aside-stack">
-      <a href="http://pf.kakao.com/_xjsBtn" target="_blank" class="aside-item">
-        <img src="/assets/img/index_ico1.png" alt="KakaoTalk Consultation"> 
+      <a href="http://pf.kakao.com/_xjsBtn" target="_blank" class="aside-item" onclick="naverScript()">
+        <img src="/assets/img/index_ico1.png" alt="KakaoTalk Consultation">
         <p>카카오톡 상담</p>
       </a>
       <a href="https://blog.naver.com/hisacademy" target="_blank" class="aside-item">
@@ -342,5 +342,38 @@
     includeHTML();
   </script>
   <script src="/assets/js/app.js"></script>
+  <script type="text/javascript" src="//wcs.naver.net/wcslog.js"> </script>
+  <script type="text/javascript">
+    if (!wcs_add) var wcs_add={};
+    wcs_add["wa"] = "s_5778f1587b40";
+    if (!_nasa) var _nasa={};
+    if(window.wcs){
+      wcs.inflow();
+      wcs_do();
+    }
+  </script>
+  <script type="text/javascript">
+    function naverScript() {
+      const MAX_RETRY = 5;
+      const RETRY_DELAY = 200;
+
+      const sendConv = (retryCount = 0, onDone) => {
+        if (typeof wcs !== "undefined" && wcs && typeof wcs.trans === "function") {
+          window.wcs_add = window.wcs_add || {};
+          wcs_add["wa"] = "s_5778f1587b40";
+          wcs.trans({ type: 'custom001' });
+          if (typeof onDone === "function") onDone();
+
+        } else if (retryCount < MAX_RETRY) {
+          setTimeout(() => sendConv(retryCount + 1, onDone), RETRY_DELAY);
+
+        } else {
+          if (typeof onDone === "function") onDone();
+        }
+      };
+
+      sendConv(0);
+    }
+  </script>
 </body>
 </html>
